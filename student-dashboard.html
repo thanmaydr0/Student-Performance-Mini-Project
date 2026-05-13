@@ -1,0 +1,1227 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Scholarly Monograph | Student Dashboard</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Public+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Scripts -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "on-background": "#191c1e",
+                        "inverse-primary": "#b2c5ff",
+                        "on-secondary-fixed": "#021f29",
+                        "on-primary-fixed-variant": "#0040a1",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#001847",
+                        "secondary-fixed-dim": "#afcbd8",
+                        "tertiary-container": "#a93802",
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#e0e3e5",
+                        "primary": "#00357f",
+                        "surface-tint": "#0056d2",
+                        "tertiary-fixed-dim": "#ffb59b",
+                        "on-secondary-container": "#4d657b",
+                        "inverse-surface": "#2d3133",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#ffdbcf",
+                        "outline-variant": "#c3c6d5",
+                        "outline": "#737784",
+                        "secondary": "#48626e",
+                        "on-tertiary-fixed-variant": "#812800",
+                        "tertiary": "#822800",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "on-surface-variant": "#434653",
+                        "surface-dim": "#d8dadc",
+                        "surface-container-high": "#e7e8e9",
+                        "primary-fixed-dim": "#b2c5ff",
+                        "on-tertiary-fixed": "#380d00",
+                        "on-tertiary-container": "#ffcebd",
+                        "secondary-fixed": "#cbe7f5",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed-variant": "#304a55",
+                        "primary-fixed": "#dae2ff",
+                        "on-error": "#ffffff",
+                        "background": "#f8f9fa",
+                        "on-surface": "#191c1d",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#ccd8ff",
+                        "surface": "#f8f9fa",
+                        "secondary-container": "#c9e2fd",
+                        "primary-container": "#004aad",
+                        "surface-container-highest": "#e0e3e5",
+                        "inverse-on-surface": "#eff1f3",
+                        "surface-bright": "#f8f9fa"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope", "sans-serif"],
+                        "body": ["Public Sans", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .active-tab {
+            @apply bg-primary/10 text-primary border-r-4 border-primary font-bold;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c3c6d5;
+            border-radius: 10px;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+        }
+        .bg-watermark {
+            background-image: radial-gradient(#00357f 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+            opacity: 0.03;
+        }
+        section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        section.active {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface flex min-h-screen overflow-hidden">
+<!-- Watermark Background -->
+<div class="fixed inset-0 bg-watermark pointer-events-none"></div>
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r-0 bg-slate-50 flex flex-col py-6 z-50 overflow-y-auto">
+<div class="px-6 mb-8">
+<h1 class="text-lg font-bold tracking-tight text-primary font-headline" style="">Scholarly Monograph</h1>
+</div>
+<div class="px-6 mb-10 flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center text-white font-bold" style="">
+            AJ
+        </div>
+<div>
+<p class="font-headline font-bold text-sm text-on-surface" style="">Alice Johnson</p>
+<p class="text-[10px] uppercase tracking-wider text-outline" style="">SM-2024-001</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<button class="nav-item w-full flex items-center gap-3 px-6 py-3 transition-all text-outline" onclick="showSection('overview', this)" style="">
+<span class="material-symbols-outlined" data-icon="dashboard" style="">dashboard</span>
+<span class="text-sm" style="">Overview</span>
+</button>
+<button class="nav-item w-full flex items-center gap-3 px-6 py-3 hover:bg-surface-container-high transition-all text-outline" onclick="showSection('performance', this)" style="">
+<span class="material-symbols-outlined" data-icon="insights" style="">insights</span>
+<span class="text-sm" style="">My Performance</span>
+</button>
+<button class="nav-item w-full flex items-center gap-3 px-6 py-3 hover:bg-surface-container-high transition-all active-tab text-primary font-bold border-r-4 border-primary bg-primary/5" onclick="showSection('ai-bot', this)" style="">
+<span class="material-symbols-outlined" data-icon="smart_toy" style="">smart_toy</span>
+<span class="text-sm" style="">AI Study Bot</span>
+</button>
+<button class="nav-item w-full flex items-center gap-3 px-6 py-3 text-outline hover:bg-surface-container-high transition-all" onclick="showSection('subjects', this)" style="">
+<span class="material-symbols-outlined" data-icon="auto_stories" style="">auto_stories</span>
+<span class="text-sm" style="">My Subjects</span>
+</button>
+</nav>
+<div class="px-4 mt-auto">
+<button id="new-session-btn" class="w-full bg-gradient-to-br from-primary to-primary-container text-white py-3 rounded-xl font-bold text-sm shadow-lg shadow-primary/20 flex items-center justify-center gap-2" style="">
+<span class="material-symbols-outlined text-sm" style="">add</span>
+            New Study Session
+        </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-64 overflow-y-auto h-screen custom-scrollbar relative">
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 left-64 z-40 bg-white/80 backdrop-blur-md h-16 px-8 flex justify-between items-center border-b border-outline-variant/30">
+<div class="flex items-center gap-4">
+<h2 class="font-headline font-bold text-xl text-primary" id="page-title" style="">AI Study Bot</h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-lg" style="">search</span>
+<input class="pl-10 pr-4 py-1.5 rounded-full border-none bg-surface-container-high text-sm focus:ring-2 focus:ring-primary/20 w-64" placeholder="Search analytics..." type="text">
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 text-outline hover:bg-surface-container-low rounded-full" style="">
+<span class="material-symbols-outlined" data-icon="notifications" style="">notifications</span>
+</button>
+<button id="settings-btn" class="p-2 text-outline hover:bg-surface-container-low rounded-full" style="">
+<span class="material-symbols-outlined" data-icon="settings" style="">settings</span>
+</button>
+<button class="p-2 text-outline hover:bg-surface-container-low rounded-full" style="">
+<span class="material-symbols-outlined" data-icon="help_outline" style="">help_outline</span>
+</button>
+</div>
+</div>
+</header>
+<div class="pt-24 pb-12 px-8 max-w-7xl mx-auto space-y-8">
+<!-- SECTION 1: OVERVIEW -->
+<section class="" id="overview">
+<div class="grid grid-cols-12 gap-6">
+<!-- Progress Ring Card -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-lowest p-8 rounded-xl shadow-sm flex flex-col items-center justify-center text-center">
+<div class="relative w-48 h-48 mb-6">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-high" cx="96" cy="96" fill="transparent" r="88" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-primary transition-all duration-1000 ease-out" cx="96" cy="96" fill="transparent" r="88" stroke="currentColor" stroke-dasharray="552.9" stroke-dashoffset="122.7" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-4xl font-headline font-extrabold text-primary" style="">77.8%</span>
+<span class="text-sm font-bold text-outline uppercase tracking-widest" style="">Grade B+</span>
+</div>
+</div>
+<h3 class="font-headline font-bold text-lg" style="">Overall Performance</h3>
+<p class="text-secondary text-sm px-4" style="">You're in the top 15% of your cohort. Keep it up!</p>
+</div>
+<!-- Stat Cards -->
+<div class="col-span-12 lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-surface-container-lowest p-6 rounded-xl border-b-4 border-primary">
+<p class="text-outline text-xs font-bold uppercase tracking-wider mb-2" style="">Math Proficiency</p>
+<div class="flex items-end justify-between">
+<h4 class="text-3xl font-headline font-bold text-primary" style="">92%</h4>
+<span class="text-primary-container text-xs font-bold flex items-center gap-1" style="">
+<span class="material-symbols-outlined text-xs" style="">trending_up</span> Mastery
+                            </span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border-b-4 border-error">
+<p class="text-outline text-xs font-bold uppercase tracking-wider mb-2" style="">History Recall</p>
+<div class="flex items-end justify-between">
+<h4 class="text-3xl font-headline font-bold text-error" style="">61%</h4>
+<span class="text-error text-xs font-bold flex items-center gap-1" style="">
+<span class="material-symbols-outlined text-xs" style="">priority_high</span> Critical
+                            </span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border-b-4 border-emerald-600">
+<p class="text-outline text-xs font-bold uppercase tracking-wider mb-2" style="">Science Growth</p>
+<div class="flex items-end justify-between">
+<h4 class="text-3xl font-headline font-bold text-emerald-600" style="">+12%</h4>
+<span class="text-emerald-600 text-xs font-bold flex items-center gap-1" style="">
+<span class="material-symbols-outlined text-xs" style="">show_chart</span> Improving
+                            </span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border-b-4 border-outline">
+<p class="text-outline text-xs font-bold uppercase tracking-wider mb-2" style="">Total Exams</p>
+<div class="flex items-end justify-between">
+<h4 class="text-3xl font-headline font-bold text-outline" style="">14</h4>
+<span class="text-outline text-xs font-bold flex items-center gap-1" style="">
+<span class="material-symbols-outlined text-xs" style="">event_available</span> Completed
+                            </span>
+</div>
+</div>
+</div>
+<!-- Weightage & Sparklines -->
+<div class="col-span-12 bg-surface-container-lowest p-8 rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-8">
+<h3 class="font-headline font-bold text-xl" style="">Subject Weightage &amp; Pulse</h3>
+<button class="text-primary text-sm font-bold flex items-center gap-1" style="">View Full Matrix <span class="material-symbols-outlined" style="">chevron_right</span></button>
+</div>
+<div class="space-y-6">
+<!-- Subject Row -->
+<div class="grid grid-cols-12 items-center gap-6">
+<div class="col-span-2 text-sm font-bold" style="">Mathematics</div>
+<div class="col-span-6 bg-surface-container-high h-2.5 rounded-full overflow-hidden">
+<div class="bg-[#00357f] h-full w-[30%]"></div>
+</div>
+<div class="col-span-1 text-xs text-outline font-bold" style="">30%</div>
+<div class="col-span-3 h-8">
+<canvas id="spark-math" width="257" height="40" style="display: block; box-sizing: border-box; height: 32px; width: 206px;"></canvas>
+</div>
+</div>
+<div class="grid grid-cols-12 items-center gap-6">
+<div class="col-span-2 text-sm font-bold" style="">Science</div>
+<div class="col-span-6 bg-surface-container-high h-2.5 rounded-full overflow-hidden">
+<div class="bg-[#059669] h-full w-[25%]"></div>
+</div>
+<div class="col-span-1 text-xs text-outline font-bold" style="">25%</div>
+<div class="col-span-3 h-8">
+<canvas id="spark-science" width="257" height="40" style="display: block; box-sizing: border-box; height: 32px; width: 206px;"></canvas>
+</div>
+</div>
+<div class="grid grid-cols-12 items-center gap-6">
+<div class="col-span-2 text-sm font-bold" style="">English</div>
+<div class="col-span-6 bg-surface-container-high h-2.5 rounded-full overflow-hidden">
+<div class="bg-[#d97706] h-full w-[20%]"></div>
+</div>
+<div class="col-span-1 text-xs text-outline font-bold" style="">20%</div>
+<div class="col-span-3 h-8">
+<canvas id="spark-english" width="257" height="40" style="display: block; box-sizing: border-box; height: 32px; width: 206px;"></canvas>
+</div>
+</div>
+<div class="grid grid-cols-12 items-center gap-6">
+<div class="col-span-2 text-sm font-bold" style="">History</div>
+<div class="col-span-6 bg-surface-container-high h-2.5 rounded-full overflow-hidden">
+<div class="bg-[#dc2626] h-full w-[15%]"></div>
+</div>
+<div class="col-span-1 text-xs text-outline font-bold" style="">15%</div>
+<div class="col-span-3 h-8">
+<canvas id="spark-history" width="257" height="40" style="display: block; box-sizing: border-box; height: 32px; width: 206px;"></canvas>
+</div>
+</div>
+<div class="grid grid-cols-12 items-center gap-6">
+<div class="col-span-2 text-sm font-bold" style="">CS</div>
+<div class="col-span-6 bg-surface-container-high h-2.5 rounded-full overflow-hidden">
+<div class="bg-[#9333ea] h-full w-[10%]"></div>
+</div>
+<div class="col-span-1 text-xs text-outline font-bold" style="">10%</div>
+<div class="col-span-3 h-8">
+<canvas id="spark-cs" width="257" height="40" style="display: block; box-sizing: border-box; height: 32px; width: 206px;"></canvas>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 2: PERFORMANCE -->
+<section id="performance" class="">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+<h3 class="font-headline font-bold text-2xl" style="">Performance Analytics</h3>
+<div class="flex items-center gap-3">
+<select class="bg-surface-container-lowest border-outline-variant text-sm px-4 py-2 rounded-xl focus:ring-primary">
+<option>All Subjects</option>
+<option>Mathematics</option>
+<option>Science</option>
+</select>
+<div class="flex bg-surface-container-high p-1 rounded-xl" id="exam-filter-group">
+<button class="exam-filter-btn px-4 py-1.5 text-xs font-bold rounded-lg bg-surface-container-lowest shadow-sm text-on-surface" data-type="All">All</button>
+<button class="exam-filter-btn px-4 py-1.5 text-xs font-bold text-outline" data-type="IAT 1">IAT 1</button>
+<button class="exam-filter-btn px-4 py-1.5 text-xs font-bold text-outline" data-type="IAT 2">IAT 2</button>
+<button class="exam-filter-btn px-4 py-1.5 text-xs font-bold text-outline" data-type="VTU Exam">VTU Exam</button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- 1. Performance Trend Over Time -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/20 col-span-1 md:col-span-2">
+<p class="text-xs font-bold text-outline uppercase mb-4" style="">Performance Trend Over Time</p>
+<canvas class="max-h-[300px]" id="chart-trend" height="364" style="display: block; box-sizing: border-box; height: 291.2px; width: 582.4px;" width="728"></canvas>
+</div>
+<!-- 3. Doughnut (Topic Mastery) -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/20">
+<p class="text-xs font-bold text-outline uppercase mb-4" style="">Grade Distribution</p>
+<canvas id="chart-doughnut" height="318" style="display: block; box-sizing: border-box; height: 254.4px; width: 254.4px;" width="318"></canvas>
+</div>
+<!-- 4. Radar (Skill Web) -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/20">
+<p class="text-xs font-bold text-outline uppercase mb-4" style="">Subject Strength Comparison</p>
+<canvas id="chart-radar" height="318" style="display: block; box-sizing: border-box; height: 254.4px; width: 254.4px;" width="318"></canvas>
+</div>
+</div>
+</section>
+<!-- SECTION 3: AI STUDY BOT -->
+<section id="ai-bot" class="active">
+<div class="grid grid-cols-12 gap-8 h-[calc(100vh-12rem)]">
+<!-- Chat Interface -->
+<div class="col-span-12 lg:col-span-7 bg-surface-container-lowest rounded-2xl shadow-sm flex flex-col overflow-hidden border border-outline-variant/20">
+<div class="p-6 border-b border-outline-variant/20 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="">smart_toy</span>
+</div>
+<div>
+<h4 class="font-headline font-bold" style="">J.A.R.V.I.S</h4>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="text-[10px] uppercase font-bold text-outline" style="">Active Analytics Bot</span>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar" id="chat-messages">
+<div class="flex gap-3 max-w-[85%]">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex-shrink-0 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-sm" style="">smart_toy</span>
+</div>
+<div class="bg-surface-container-high p-4 rounded-2xl rounded-tl-none text-sm text-on-surface" style="">
+                                Hello Alice! I've analyzed your recent History IAT 2. You struggled with chronological alignment. Would you like to summarize the Industrial Revolution timeline together?
+                            </div>
+</div>
+<div class="flex gap-3 max-w-[85%] ml-auto flex-row-reverse">
+<div class="w-8 h-8 rounded-full bg-primary flex-shrink-0 flex items-center justify-center text-white">
+<span class="text-[10px] font-bold" style="">AJ</span>
+</div>
+<div class="bg-primary text-white p-4 rounded-2xl rounded-tr-none text-sm" style="">
+                                Yes, please. Can you also point out my weak areas in the English essay from last week?
+                            </div>
+</div>
+<div class="hidden flex gap-3 max-w-[85%]" id="typing-indicator">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex-shrink-0 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-sm" style="">smart_toy</span>
+</div>
+<div class="bg-surface-container-high p-4 rounded-2xl rounded-tl-none flex gap-1">
+<span class="w-1.5 h-1.5 bg-outline rounded-full animate-bounce"></span>
+<span class="w-1.5 h-1.5 bg-outline rounded-full animate-bounce [animation-delay:0.2s]"></span>
+<span class="w-1.5 h-1.5 bg-outline rounded-full animate-bounce [animation-delay:0.4s]"></span>
+</div>
+</div>
+</div>
+<div class="p-6 border-t border-outline-variant/20 space-y-4">
+<div class="flex gap-2 overflow-x-auto pb-2 custom-scrollbar">
+<button class="whitespace-nowrap px-4 py-1.5 bg-surface-container-low hover:bg-surface-container-high border border-outline-variant/30 rounded-full text-xs font-bold text-on-surface-variant transition-colors" style="">[Explain This]</button>
+<button class="whitespace-nowrap px-4 py-1.5 bg-surface-container-low hover:bg-surface-container-high border border-outline-variant/30 rounded-full text-xs font-bold text-on-surface-variant transition-colors" style="">[Summarize]</button>
+<button class="whitespace-nowrap px-4 py-1.5 bg-surface-container-low hover:bg-surface-container-high border border-outline-variant/30 rounded-full text-xs font-bold text-on-surface-variant transition-colors" style="">[Quiz Me]</button>
+<button class="whitespace-nowrap px-4 py-1.5 bg-surface-container-low hover:bg-surface-container-high border border-outline-variant/30 rounded-full text-xs font-bold text-on-surface-variant transition-colors" style="">[Find Weak Areas]</button>
+</div>
+<div class="relative">
+<input class="w-full pl-6 pr-12 py-4 rounded-2xl border-outline-variant/30 bg-surface-container-low focus:ring-primary focus:border-primary" placeholder="Ask J.A.R.V.I.S anything about your subjects..." type="text">
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-primary hover:text-primary-container" style="">
+<span class="material-symbols-outlined" style="">send</span>
+</button>
+</div>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-5 space-y-6">
+<!-- Upload Zone -->
+<div class="bg-surface-container-lowest p-8 rounded-2xl border-2 border-dashed border-outline-variant flex flex-col items-center justify-center text-center transition-all duration-300 hover:border-primary/40" id="upload-zone">
+<input type="file" id="file-upload-input" accept=".pdf,.txt" class="hidden" />
+<div class="w-16 h-16 bg-primary/5 rounded-full flex items-center justify-center text-primary mb-4">
+<span class="material-symbols-outlined text-3xl">upload_file</span>
+</div>
+<h4 class="font-headline font-bold text-lg mb-2">Upload Study Materials</h4>
+<p class="text-sm text-secondary mb-6">Drop your PDFs or text files here to get AI-powered analysis, summaries & quizzes.</p>
+<button class="bg-surface-container-high hover:bg-surface-variant text-on-surface px-8 py-3 rounded-xl text-sm font-bold transition-all" id="select-files-btn">
+    Select Files
+</button>
+<!-- Upload Progress -->
+<div class="hidden w-full mt-6 space-y-3" id="upload-progress">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary animate-spin">progress_activity</span>
+<span class="text-sm font-bold text-on-surface" id="upload-status-text">Uploading & analyzing...</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full transition-all duration-500" id="upload-progress-bar" style="width: 0%"></div>
+</div>
+</div>
+<!-- Upload Error -->
+<p class="hidden text-sm font-semibold text-red-600 mt-4" id="upload-error"></p>
+</div>
+<!-- Recent Analysis -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl border border-outline-variant/20">
+<h4 class="font-headline font-bold mb-4">Recent Analysis</h4>
+<div class="space-y-3" id="recent-uploads-list">
+<div class="text-center py-4" id="recent-uploads-loading">
+<span class="material-symbols-outlined text-outline animate-spin">progress_activity</span>
+<p class="text-xs text-outline mt-2">Loading...</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Analysis Result Modal -->
+<div class="hidden fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm flex items-center justify-center p-6" id="analysis-modal">
+<div class="bg-surface-container-lowest rounded-2xl shadow-2xl max-w-2xl w-full max-h-[80vh] flex flex-col overflow-hidden">
+<div class="p-6 border-b border-outline-variant/20 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">analytics</span>
+<h3 class="font-headline font-bold text-lg" id="modal-file-name">Analysis Result</h3>
+</div>
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors" id="close-modal-btn">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-6 overflow-y-auto custom-scrollbar prose prose-sm max-w-none" id="modal-analysis-content">
+</div>
+</div>
+</div>
+</div>
+
+<!-- Settings Modal -->
+<div class="hidden fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm flex items-center justify-center p-6" id="settings-modal">
+<div class="bg-surface-container-lowest w-full max-w-lg rounded-2xl shadow-xl border border-outline-variant/20 flex flex-col max-h-[90vh]">
+<div class="p-6 border-b border-outline-variant/20 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined">settings</span>
+</div>
+<h3 class="font-headline font-bold text-lg">Settings</h3>
+</div>
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors" id="close-settings-btn">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-6 overflow-y-auto custom-scrollbar space-y-6">
+<div>
+<h4 class="text-sm font-bold text-outline uppercase mb-4">Appearance</h4>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">dark_mode</span>
+<span class="font-bold text-sm">Dark Mode</span>
+</div>
+<button class="w-12 h-6 bg-surface-container-high rounded-full relative transition-colors duration-300">
+<span class="absolute left-1 top-1 w-4 h-4 bg-outline rounded-full transition-transform duration-300"></span>
+</button>
+</div>
+</div>
+<div>
+<h4 class="text-sm font-bold text-outline uppercase mb-4">Account</h4>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">person</span>
+<span class="font-bold text-sm">Profile Details</span>
+</div>
+<button class="text-primary text-sm font-bold">Edit</button>
+</div>
+<div>
+<h4 class="text-sm font-bold text-outline uppercase mb-4 mt-6">Session</h4>
+<div class="flex items-center justify-between p-4 bg-error/10 text-error rounded-xl cursor-pointer hover:bg-error/20 transition-colors" id="logout-btn">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-bold text-sm">Sign Out</span>
+</div>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 4: MY SUBJECTS -->
+<section id="subjects">
+<div class="grid grid-cols-12 gap-6">
+<div class="col-span-12 bg-primary-container text-white p-8 rounded-2xl relative overflow-hidden">
+<div class="relative z-10 max-w-2xl">
+<h3 class="font-headline font-bold text-2xl mb-2" style="">Weightage Intelligence</h3>
+<p class="text-on-primary-container text-sm" style="">Your final grade is a weighted aggregation of IAT 1 (20%), IAT 2 (30%), and VTU-exam (50%). Currently, your strong performance in Math is offsetting the lag in History.</p>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-[160px] opacity-10" style="">calculate</span>
+</div>
+<div class="col-span-12 bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/20 overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high">
+<th class="px-6 py-4 text-xs font-bold text-outline uppercase tracking-widest" style="">Subject</th>
+<th class="px-6 py-4 text-xs font-bold text-outline uppercase tracking-widest" style="">Score</th>
+<th class="px-6 py-4 text-xs font-bold text-outline uppercase tracking-widest" style="">Grade</th>
+<th class="px-6 py-4 text-xs font-bold text-outline uppercase tracking-widest" style="">Weightage</th>
+<th class="px-6 py-4 text-xs font-bold text-outline uppercase tracking-widest" style="">Pulse</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr>
+<td class="px-6 py-5" style="">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-[#00357f]/10 text-[#00357f] flex items-center justify-center">
+<span class="material-symbols-outlined text-lg" style="">functions</span>
+</div>
+<span class="font-bold text-sm text-on-surface" style="">Mathematics</span>
+</div>
+</td>
+<td class="px-6 py-5 text-sm font-bold text-on-surface" style="">92/100</td>
+<td class="px-6 py-5" style="">
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-extrabold" style="">A+</span>
+</td>
+<td class="px-6 py-5 text-xs text-secondary" style="">30% Total</td>
+<td class="px-6 py-5" style="">
+<div class="w-24 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-[#00357f] h-full w-[92%]"></div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-5" style="">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-[#059669]/10 text-[#059669] flex items-center justify-center">
+<span class="material-symbols-outlined text-lg" style="">biotech</span>
+</div>
+<span class="font-bold text-sm text-on-surface" style="">Science</span>
+</div>
+</td>
+<td class="px-6 py-5 text-sm font-bold text-on-surface" style="">78/100</td>
+<td class="px-6 py-5" style="">
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-extrabold" style="">B+</span>
+</td>
+<td class="px-6 py-5 text-xs text-secondary" style="">25% Total</td>
+<td class="px-6 py-5" style="">
+<div class="w-24 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-[#059669] h-full w-[78%]"></div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-5" style="">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-[#d97706]/10 text-[#d97706] flex items-center justify-center">
+<span class="material-symbols-outlined text-lg" style="">translate</span>
+</div>
+<span class="font-bold text-sm text-on-surface" style="">English</span>
+</div>
+</td>
+<td class="px-6 py-5 text-sm font-bold text-on-surface" style="">84/100</td>
+<td class="px-6 py-5" style="">
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-extrabold" style="">A</span>
+</td>
+<td class="px-6 py-5 text-xs text-secondary" style="">20% Total</td>
+<td class="px-6 py-5" style="">
+<div class="w-24 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-[#d97706] h-full w-[84%]"></div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-5" style="">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-[#dc2626]/10 text-[#dc2626] flex items-center justify-center">
+<span class="material-symbols-outlined text-lg" style="">history_edu</span>
+</div>
+<span class="font-bold text-sm text-on-surface" style="">History</span>
+</div>
+</td>
+<td class="px-6 py-5 text-sm font-bold text-on-surface" style="">61/100</td>
+<td class="px-6 py-5" style="">
+<span class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-full text-[10px] font-extrabold" style="">C</span>
+</td>
+<td class="px-6 py-5 text-xs text-secondary" style="">15% Total</td>
+<td class="px-6 py-5" style="">
+<div class="w-24 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-[#dc2626] h-full w-[61%]"></div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-5" style="">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-[#9333ea]/10 text-[#9333ea] flex items-center justify-center">
+<span class="material-symbols-outlined text-lg" style="">code</span>
+</div>
+<span class="font-bold text-sm text-on-surface" style="">Computer Science</span>
+</div>
+</td>
+<td class="px-6 py-5 text-sm font-bold text-on-surface" style="">95/100</td>
+<td class="px-6 py-5" style="">
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-extrabold" style="">A++</span>
+</td>
+<td class="px-6 py-5 text-xs text-secondary" style="">10% Total</td>
+<td class="px-6 py-5" style="">
+<div class="w-24 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-[#9333ea] h-full w-[95%]"></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</div>
+</main>
+<script>
+    function showSection(id, btn) {
+        document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        
+        document.querySelectorAll('.nav-item').forEach(b => {
+            b.classList.remove('active-tab', 'text-primary', 'font-bold', 'border-r-4', 'border-primary', 'bg-primary/5');
+            b.classList.add('text-outline');
+        });
+        btn.classList.add('active-tab', 'text-primary', 'font-bold', 'border-r-4', 'border-primary', 'bg-primary/5');
+        btn.classList.remove('text-outline');
+        
+        document.getElementById('page-title').innerText = btn.querySelector('span:last-child').innerText;
+    }
+
+    // --- Chart Initializations ---
+    document.addEventListener('DOMContentLoaded', () => {
+        const subjectColors = {
+            math: '#00357f',
+            science: '#059669',
+            english: '#d97706',
+            history: '#dc2626',
+            cs: '#9333ea'
+        };
+        const allColors = Object.values(subjectColors);
+
+        // Default Chart Configurations
+        Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(0, 53, 127, 0.9)';
+        Chart.defaults.plugins.tooltip.padding = 12;
+        Chart.defaults.plugins.tooltip.cornerRadius = 8;
+        Chart.defaults.plugins.tooltip.titleFont = { family: 'Manrope', weight: 'bold' };
+        Chart.defaults.plugins.tooltip.bodyFont = { family: 'Inter' };
+        Chart.defaults.elements.point.hoverRadius = 8;
+        Chart.defaults.elements.point.radius = 4;
+
+        const baseOptions = {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    enabled: true,
+                    mode: 'index',
+                    intersect: false,
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) label += ': ';
+                            if (context.parsed.y !== undefined) label += context.parsed.y + '%';
+                            else if (context.parsed.r !== undefined) label += context.parsed.r;
+                            else if (context.parsed !== undefined) label += context.parsed + '%';
+                            return label;
+                        }
+                    }
+                }
+            }
+        };
+
+        // 1. Line Chart (Trend)
+        const chartTrend = new Chart(document.getElementById('chart-trend'), {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [
+                    {
+                        label: 'Overall Performance',
+                        data: [65, 72, 68, 85, 78, 82],
+                        borderColor: subjectColors.math,
+                        backgroundColor: 'rgba(0, 53, 127, 0.05)',
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: subjectColors.math,
+                        pointBorderWidth: 2,
+                        pointHoverBorderWidth: 4,
+                        pointRadius: 6,
+                        pointHoverRadius: 9
+                    }
+                ]
+            },
+            options: {
+                ...baseOptions,
+                interaction: { mode: 'index', intersect: false },
+                scales: {
+                    y: { 
+                        beginAtZero: false, 
+                        min: 50, 
+                        max: 100,
+                        grid: { color: 'rgba(0,0,0,0.03)' },
+                        ticks: { callback: v => v + '%' }
+                    },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // 2. Doughnut (Grade Distribution)
+        const chartDoughnut = new Chart(document.getElementById('chart-doughnut'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Grade A+', 'Grade A', 'Grade B+', 'Grade B', 'Grade C'],
+                datasets: [{
+                    data: [25, 30, 20, 15, 10],
+                    backgroundColor: [subjectColors.math, subjectColors.science, subjectColors.english, subjectColors.cs, subjectColors.history],
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                ...baseOptions,
+                cutout: '65%'
+            }
+        });
+
+        // 3. Radar (Subject Strength Comparison)
+        const chartRadar = new Chart(document.getElementById('chart-radar'), {
+            type: 'radar',
+            data: {
+                labels: ['Math', 'Science', 'English', 'History', 'CS'],
+                datasets: [{
+                    label: 'Subject Proficiency',
+                    data: [92, 78, 84, 61, 95],
+                    backgroundColor: 'rgba(0, 53, 127, 0.2)',
+                    borderColor: subjectColors.math,
+                    pointBackgroundColor: subjectColors.math,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                ...baseOptions,
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(0,0,0,0.05)' },
+                        grid: { color: 'rgba(0,0,0,0.05)' },
+                        suggestedMin: 50,
+                        suggestedMax: 100,
+                        ticks: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Mini Sparklines for Overview
+        ['math', 'science', 'english', 'history', 'cs'].forEach((id, idx) => {
+            new Chart(document.getElementById('spark-'+id), {
+                type: 'line',
+                data: {
+                    labels: [1,2,3,4,5,6],
+                    datasets: [{ 
+                        data: Array.from({length: 6}, () => Math.floor(Math.random() * 40) + 60), 
+                        borderColor: allColors[idx], 
+                        borderWidth: 2.5, 
+                        pointRadius: 0,
+                        tension: 0.4 
+                    }]
+                },
+                options: { 
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, tooltip: { enabled: false } },
+                    scales: { x: { display: false }, y: { display: false } }
+                }
+            });
+        });
+
+        // --- Interactive Filter Logic ---
+        const mockData = {
+            'All': {
+                trend: [65, 72, 68, 85, 78, 82],
+                doughnut: [25, 30, 20, 15, 10],
+                radar: [92, 78, 84, 61, 95]
+            },
+            'IAT 1': {
+                trend: [55, 60, 65, 70, 75, 78],
+                doughnut: [15, 25, 35, 15, 10],
+                radar: [85, 70, 75, 55, 88]
+            },
+            'IAT 2': {
+                trend: [60, 68, 72, 80, 82, 85],
+                doughnut: [20, 35, 25, 10, 10],
+                radar: [90, 82, 88, 65, 92]
+            },
+            'VTU Exam': {
+                trend: [70, 75, 80, 88, 90, 92],
+                doughnut: [35, 25, 20, 10, 10],
+                radar: [95, 85, 90, 70, 98]
+            }
+        };
+
+        const filterBtns = document.querySelectorAll('.exam-filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Remove active styling from all
+                filterBtns.forEach(b => {
+                    b.classList.remove('rounded-lg', 'bg-surface-container-lowest', 'shadow-sm', 'text-on-surface');
+                    b.classList.add('text-outline');
+                });
+
+                // Add active styling to clicked
+                const target = e.currentTarget;
+                target.classList.remove('text-outline');
+                target.classList.add('rounded-lg', 'bg-surface-container-lowest', 'shadow-sm', 'text-on-surface');
+
+                // Update charts with mock data
+                const examType = target.getAttribute('data-type');
+                if (mockData[examType]) {
+                    chartTrend.data.datasets[0].data = mockData[examType].trend;
+                    chartTrend.update();
+
+                    chartDoughnut.data.datasets[0].data = mockData[examType].doughnut;
+                    chartDoughnut.update();
+
+                    chartRadar.data.datasets[0].data = mockData[examType].radar;
+                    chartRadar.update();
+                }
+            });
+        });
+    });
+</script>
+<script src="js/api-config.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.querySelector('#ai-bot input');
+        const sendBtn = document.querySelector('#ai-bot .relative button');
+        const typingIndicator = document.getElementById('typing-indicator');
+        const quickButtons = document.querySelectorAll('#ai-bot .flex.gap-2 button');
+
+        function appendMessage(text, isUser = false) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = isUser ? 'flex gap-3 max-w-[85%] ml-auto flex-row-reverse' : 'flex gap-3 max-w-[85%]';
+            
+            const avatar = isUser 
+                ? '<div class="w-8 h-8 rounded-full bg-primary flex-shrink-0 flex items-center justify-center text-white"><span class="text-[10px] font-bold">AJ</span></div>' 
+                : '<div class="w-8 h-8 rounded-full bg-secondary-container flex-shrink-0 flex items-center justify-center text-primary"><span class="material-symbols-outlined text-sm">smart_toy</span></div>';
+
+            const bubbleClass = isUser 
+                ? 'bg-primary text-white p-4 rounded-2xl rounded-tr-none text-sm' 
+                : 'bg-surface-container-high p-4 rounded-2xl rounded-tl-none text-sm text-on-surface';
+
+            msgDiv.innerHTML = `
+                ${avatar}
+                <div class="${bubbleClass}">${text}</div>
+            `;
+            
+            chatMessages.insertBefore(msgDiv, typingIndicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        async function handleSendMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+
+            appendMessage(text, true);
+            chatInput.value = '';
+
+            typingIndicator.classList.remove('hidden');
+            typingIndicator.classList.add('flex');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                const data = await apiCall(API.chat.jarvis, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        message: text,
+                        context: `Student: Alice Johnson (SM-2024-001)\nSubjects: Mathematics (92%), Science (78%), English (84%), History (61%), CS (95%)\nOverall: 77.8% (B+)`
+                    })
+                });
+
+                typingIndicator.classList.add('hidden');
+                typingIndicator.classList.remove('flex');
+                
+                if (data.error) {
+                    appendMessage(`Error: ${data.error}`, false);
+                } else {
+                    appendMessage(data.reply, false);
+                }
+            } catch (error) {
+                typingIndicator.classList.add('hidden');
+                typingIndicator.classList.remove('flex');
+                appendMessage(`Connection error: ${error.message}. Make sure the Supabase Edge Functions are deployed.`, false);
+            }
+
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Quick action buttons
+        quickButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const action = btn.textContent.replace(/[\[\]]/g, '').trim();
+                chatInput.value = action;
+                handleSendMessage();
+            });
+        });
+
+        sendBtn?.addEventListener('click', handleSendMessage);
+        chatInput?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSendMessage();
+        });
+        const newSessionBtn = document.getElementById('new-session-btn');
+        if (newSessionBtn) {
+            newSessionBtn.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent any default action
+                try {
+                    // Switch to AI Bot section
+                    const aiBotNavBtn = document.querySelector('button[onclick*="ai-bot"]');
+                    if (aiBotNavBtn && typeof showSection === 'function') {
+                        showSection('ai-bot', aiBotNavBtn);
+                    }
+
+                    // Clear chat messages safely
+                    if (chatMessages) {
+                        const children = Array.from(chatMessages.children);
+                        for (let i = 0; i < children.length; i++) {
+                            const child = children[i];
+                            if (child.id !== 'typing-indicator') {
+                                child.remove();
+                            }
+                        }
+                    }
+
+                    // Send a welcome message
+                    if (typeof appendMessage === 'function') {
+                        appendMessage("Hello! I am J.A.R.V.I.S, your AI study assistant. What would you like to study today?", false);
+                    }
+
+                    // Clear input
+                    if (chatInput) {
+                        chatInput.value = '';
+                    }
+                } catch (error) {
+                    console.error("Error starting new session:", error);
+                }
+            });
+        }
+    });
+</script>
+<!-- Upload Feature Script -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const uploadZone = document.getElementById('upload-zone');
+    const fileInput = document.getElementById('file-upload-input');
+    const selectBtn = document.getElementById('select-files-btn');
+    const uploadProgress = document.getElementById('upload-progress');
+    const uploadProgressBar = document.getElementById('upload-progress-bar');
+    const uploadStatusText = document.getElementById('upload-status-text');
+    const uploadError = document.getElementById('upload-error');
+    const recentList = document.getElementById('recent-uploads-list');
+    const recentLoading = document.getElementById('recent-uploads-loading');
+    const modal = document.getElementById('analysis-modal');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const modalFileName = document.getElementById('modal-file-name');
+    const modalContent = document.getElementById('modal-analysis-content');
+
+    // --- Select Files button ---
+    selectBtn.addEventListener('click', () => fileInput.click());
+
+    // --- Drag & Drop ---
+    uploadZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadZone.classList.add('border-primary', 'bg-primary/5');
+    });
+    uploadZone.addEventListener('dragleave', () => {
+        uploadZone.classList.remove('border-primary', 'bg-primary/5');
+    });
+    uploadZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove('border-primary', 'bg-primary/5');
+        if (e.dataTransfer.files.length > 0) {
+            handleFileUpload(e.dataTransfer.files[0]);
+        }
+    });
+
+    // --- File input change ---
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files.length > 0) {
+            handleFileUpload(fileInput.files[0]);
+        }
+    });
+
+    // --- Upload & Analyze ---
+    async function handleFileUpload(file) {
+        // Validate
+        const allowed = ['application/pdf', 'text/plain'];
+        if (!allowed.includes(file.type)) {
+            showUploadError('Only PDF and TXT files are supported.');
+            return;
+        }
+        if (file.size > 10 * 1024 * 1024) {
+            showUploadError('File must be under 10MB.');
+            return;
+        }
+
+        // Show progress
+        hideUploadError();
+        uploadProgress.classList.remove('hidden');
+        uploadProgressBar.style.width = '10%';
+        uploadStatusText.textContent = 'Uploading file...';
+        selectBtn.disabled = true;
+        selectBtn.classList.add('opacity-50');
+
+        // Simulate progress while waiting
+        let progress = 10;
+        const progressInterval = setInterval(() => {
+            if (progress < 85) {
+                progress += Math.random() * 8;
+                uploadProgressBar.style.width = Math.min(progress, 85) + '%';
+                if (progress > 40) uploadStatusText.textContent = 'Analyzing with AI...';
+            }
+        }, 500);
+
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            // Get user ID from Supabase session
+            const sb = getSupabaseClient();
+            if (sb) {
+                const { data: { session } } = await sb.auth.getSession();
+                if (session?.user?.id) {
+                    formData.append('userId', session.user.id);
+                }
+            }
+
+            const response = await fetch(API.uploads.analyze, {
+                method: 'POST',
+                headers: {
+                    'x-user-id': (await getAuth()).user?.id || '',
+                },
+                body: formData,
+            });
+
+            clearInterval(progressInterval);
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.error || 'Upload failed');
+            }
+
+            // Complete progress
+            uploadProgressBar.style.width = '100%';
+            uploadStatusText.textContent = 'Analysis complete!';
+
+            setTimeout(() => {
+                uploadProgress.classList.add('hidden');
+                uploadProgressBar.style.width = '0%';
+                selectBtn.disabled = false;
+                selectBtn.classList.remove('opacity-50');
+            }, 1500);
+
+            // Show result in modal
+            showAnalysisModal(result.file_name, result.analysis);
+
+            // Refresh recent uploads
+            loadRecentUploads();
+        } catch (error) {
+            clearInterval(progressInterval);
+            uploadProgress.classList.add('hidden');
+            uploadProgressBar.style.width = '0%';
+            selectBtn.disabled = false;
+            selectBtn.classList.remove('opacity-50');
+            showUploadError(error.message || 'Upload failed. Please try again.');
+        }
+
+        // Reset file input
+        fileInput.value = '';
+    }
+
+    // --- Show/Hide Error ---
+    function showUploadError(msg) {
+        uploadError.textContent = msg;
+        uploadError.classList.remove('hidden');
+    }
+    function hideUploadError() {
+        uploadError.classList.add('hidden');
+    }
+
+    // --- Analysis Modal ---
+    function showAnalysisModal(fileName, analysisMarkdown) {
+        modalFileName.textContent = fileName;
+        // Render markdown to HTML
+        if (typeof marked !== 'undefined') {
+            modalContent.innerHTML = marked.parse(analysisMarkdown);
+        } else {
+            modalContent.innerHTML = `<pre class="whitespace-pre-wrap text-sm">${analysisMarkdown}</pre>`;
+        }
+        modal.classList.remove('hidden');
+    }
+
+    closeModalBtn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+    });
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.add('hidden');
+    });
+
+    // --- Settings Modal ---
+    const settingsBtn = document.getElementById('settings-btn');
+    const settingsModal = document.getElementById('settings-modal');
+    const closeSettingsBtn = document.getElementById('close-settings-btn');
+
+    if (settingsBtn && settingsModal && closeSettingsBtn) {
+        settingsBtn.addEventListener('click', () => {
+            settingsModal.classList.remove('hidden');
+        });
+
+        closeSettingsBtn.addEventListener('click', () => {
+            settingsModal.classList.add('hidden');
+        });
+
+        settingsModal.addEventListener('click', (e) => {
+            if (e.target === settingsModal) settingsModal.classList.add('hidden');
+        });
+
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', async () => {
+                logoutBtn.innerHTML = '<div class="flex items-center gap-3"><span class="material-symbols-outlined animate-spin">sync</span><span class="font-bold text-sm">Signing out...</span></div>';
+                try {
+                    await supabaseClient.auth.signOut();
+                } catch (e) {
+                    console.error("Signout error:", e);
+                }
+                window.location.href = 'login.html';
+            });
+        }
+    }
+
+    // --- Load Recent Uploads ---
+    async function loadRecentUploads() {
+        try {
+            const auth = await getAuth();
+            const userId = auth.user?.id || '';
+            const response = await fetch(`${API.uploads.recent}?userId=${userId}`);
+            const data = await response.json();
+
+            recentLoading?.remove();
+            recentList.innerHTML = '';
+
+            if (!data.uploads || data.uploads.length === 0) {
+                recentList.innerHTML = `
+                    <div class="text-center py-6">
+                        <span class="material-symbols-outlined text-outline text-3xl">folder_open</span>
+                        <p class="text-xs text-outline mt-2">No uploads yet. Upload a file to get started!</p>
+                    </div>`;
+                return;
+            }
+
+            data.uploads.forEach(upload => {
+                const icon = upload.file_type === 'application/pdf' ? 'picture_as_pdf' : 'description';
+                const iconColor = upload.file_type === 'application/pdf' ? 'text-primary' : 'text-secondary';
+                const timeAgo = getTimeAgo(upload.created_at);
+
+                const el = document.createElement('div');
+                el.className = 'p-4 bg-surface-container-low rounded-xl flex items-center gap-3 hover:bg-surface-container-high transition-colors cursor-pointer';
+                el.innerHTML = `
+                    <span class="material-symbols-outlined ${iconColor}">${icon}</span>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-bold truncate">${upload.file_name}</p>
+                        <p class="text-[10px] text-outline uppercase tracking-wider">${timeAgo}</p>
+                    </div>
+                    <button class="text-primary hover:underline text-xs font-bold flex-shrink-0 view-analysis-btn">View</button>
+                `;
+
+                // Click to view analysis
+                el.querySelector('.view-analysis-btn').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const analysis = upload.analysis_result?.analysis || 'No analysis available.';
+                    showAnalysisModal(upload.file_name, analysis);
+                });
+
+                recentList.appendChild(el);
+            });
+        } catch (error) {
+            console.error('Failed to load recent uploads:', error);
+            if (recentLoading) recentLoading.remove();
+            recentList.innerHTML = `<p class="text-xs text-outline text-center py-4">Could not load uploads.</p>`;
+        }
+    }
+
+    function getTimeAgo(dateStr) {
+        const diff = Date.now() - new Date(dateStr).getTime();
+        const mins = Math.floor(diff / 60000);
+        if (mins < 1) return 'Just now';
+        if (mins < 60) return `${mins}m ago`;
+        const hours = Math.floor(mins / 60);
+        if (hours < 24) return `${hours}h ago`;
+        const days = Math.floor(hours / 24);
+        return `${days}d ago`;
+    }
+
+    // Load on page load
+    loadRecentUploads();
+});
+</script>
+</body></html>

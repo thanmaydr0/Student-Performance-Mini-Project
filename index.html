@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance System</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg-start: #f7fbff;
+            --bg-end: #dcecff;
+            --card: #ffffff;
+            --primary: #0f4c81;
+            --primary-dark: #0a365c;
+            --secondary: #edf5ff;
+            --text: #12324a;
+            --muted: #5f7688;
+            --border: rgba(15, 76, 129, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+            color: var(--text);
+            display: grid;
+            place-items: center;
+            padding: 24px;
+        }
+
+        .card {
+            width: min(760px, 100%);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: 0 24px 60px rgba(15, 76, 129, 0.12);
+            padding: 40px 32px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: var(--secondary);
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 18px 0 12px;
+            font-size: clamp(2rem, 4vw, 3.3rem);
+            line-height: 1.05;
+        }
+
+        p {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--muted);
+        }
+
+        .actions {
+            margin-top: 28px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .action {
+            text-decoration: none;
+            border-radius: 18px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            background: #fff;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(15, 76, 129, 0.12);
+            border-color: rgba(15, 76, 129, 0.3);
+        }
+
+        .action.primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .action.primary .meta {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .label {
+            display: block;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .meta {
+            display: block;
+            font-size: 0.95rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .hint {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            font-size: 0.95rem;
+        }
+
+        code {
+            background: var(--secondary);
+            color: var(--primary-dark);
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 0.92rem;
+        }
+    </style>
+</head>
+<body>
+    <main class="card">
+        <span class="eyebrow">Backend Connected</span>
+        <h1>Student Performance System</h1>
+        <p>Open the portal you want to test. Your backend server is running, and these pages will use the same Express app at <code>localhost:3000</code>.</p>
+
+        <section class="actions">
+            <a class="action primary" href="/student-login.html">
+                <span class="label">Student Login</span>
+                <span class="meta">Open the student portal and test student authentication and dashboard APIs.</span>
+            </a>
+
+            <a class="action" href="/teacher-login.html">
+                <span class="label">Teacher Login</span>
+                <span class="meta">Open the teacher portal and test teacher login, subjects, records, and analytics APIs.</span>
+            </a>
+        </section>
+
+        <p class="hint">Direct links also work: <code>/student-login.html</code> and <code>/teacher-login.html</code>.</p>
+    </main>
+</body>
+</html>
