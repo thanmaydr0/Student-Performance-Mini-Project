@@ -1,0 +1,22 @@
+services:
+  # 1. Node.js Backend Service
+  - type: web
+    name: scholarly-backend
+    env: node
+    rootDir: scholarly-backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: SUPABASE_URL
+        value: https://urfpepugxvbcxxcdxicp.supabase.co
+      - key: SUPABASE_ANON_KEY
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVyZnBlcHVneHZiY3h4Y2R4aWNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1NzM3ODgsImV4cCI6MjA5MjE0OTc4OH0.jYKnQIfQvGCLYIRRyXhmAkzYZ1cFgtDplcGZ_9bO9hU
+      - key: OPENAI_API_KEY
+        sync: false # You must set this manually in the Render dashboard
+        
+  # 2. Static Frontend Service
+  - type: web
+    name: scholarly-frontend
+    env: static
+    buildCommand: ""
+    staticPublishPath: .
