@@ -5,7 +5,7 @@
 
 const SUPABASE_URL = "https://urfpepugxvbcxxcdxicp.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVyZnBlcHVneHZiY3h4Y2R4aWNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1NzM3ODgsImV4cCI6MjA5MjE0OTc4OH0.jYKnQIfQvGCLYIRRyXhmAkzYZ1cFgtDplcGZ_9bO9hU";
-const BACKEND_URL = "http://localhost:5000";
+const BACKEND_URL = "https://scholarly-backend-p201.onrender.com";
 
 // --- Supabase Client (loaded from CDN in HTML) ---
 // The global `supabase` object is created after the SDK script loads.
